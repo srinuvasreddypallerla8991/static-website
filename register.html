@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<style type="text/css">
+		#map{
+			width: 400px;
+			height: 250px;
+			float: left;
+		}
+	</style>
+	
+	
+</head>
+<body>
+	<div id="container">
+		<header>
+	<h1><span class="blue-text">SREE </span>Developer Directory</h1>
+	<h2>Find a web developer <span class="white-text"> Now</span></h2>
+	</header>
+	<nav id="menu">
+	    <ul>
+		   <li class="menuitem"><a href="index.html">Home</a></li>
+		   <li class="menuitem"><a href="about.html">About Us</a></li>
+		   <li class="menuitem"><a href="browse.html"> Browse Developer</a></li>
+		   <li class="menuitem"><a href="register.html"> Register as a Developer</a></li>
+		   <li class="menuitem"><a href="contact.html">Contact Us</a></li>
+	    </ul>
+    </nav>
+
+    <nav id="leftmenu">
+	<h3>Links</h3>
+
+	<ul>
+		<li><a href="browse.html">SEO</a></li>
+		<li><a href="browse.html">PHP</a></li>
+		<li><a href="browse.html">AJAX</a></li>
+		<li><a href="browse.html">JQUERY</a></li>
+		<li><a href="browse.html">WEB DESIGN</a></li>
+		<li><a href="browse.html">WEB PROGRAMMING</a></li>
+		<li><a href="browse.html">JAVASCRIPT</a></li>
+		<li><a href="browse.html">FRAMEWORKS</a></li>
+		<li><a href="browse.html">DATABASES</a></li>
+	</ul>
+</nav>
+<section>
+	<h3>Register</h3>
+	<form action=""method="post">
+		<p>
+		<label for="first_name">First NAME</label>
+		<input type="text" name="first_name">
+		</p>
+		<p>
+		<label for="last_name">Last NAME</label>
+		<input type="text" name="last_name">
+		</p>
+		<p>
+		<label for="email">Email</label>
+		<input type="text" name="email">
+		</p>
+		<p>
+			<label for="location">Location:</label>
+			<div id="map"></div>
+		</p>
+		<div style="clear: both;"></div>
+		<p>
+			<input type="submit" value="Register">
+		</p>
+
+	</form>
+	<script type="text/javascript">
+		if(navigator.geolocation)
+		{
+			var timeoutVal=10*1000*1000;
+			navigator.geolocation.getCurrentPosition(
+				displayPosition,
+				displayError,
+				{enableHighAccuracy:true,timeout:timeoutVal,maximumAge:0});
+		}
+		else
+		{
+			alert("Geolocation is not supported by the browser");
+		}
+		function displayPosition(position)
+		{
+			var pos=new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+			var options={
+				zoom=10,
+				center=pos,
+				mapTypeId:google.maps.mapTypeId.ROADMAP
+			};
+			var map=new google.maps.Map(document.getElementById("map"),options);
+			var marker=new google.maps.Marker({
+				position:pos,
+				map:map,
+				title:"User location"
+			});
+			var contentString="<b>Timestamp:</b>"+parseTimestamp(position.timestamp)+"<br/><b>User location:</b>latitude";
+			var infowindow=new google.maps.Infowindow({
+				content:contentString;
+
+			});
+			google.maps.event.addListener(marker,'click',funcction(){
+				infowindow.open(map,marker);
+			});
+
+		}
+		function displayError(error){
+			var errors={
+				1:'Permission denied',
+				2:'Position unavailable',
+				3:'Request timeout'
+			};
+			alert("Error:"+errors[error.code]);
+
+		}
+
+		function parseTimestamp(timestamp)
+		{
+			var d=new Date(timestamp);
+			var day=d.getDate();
+			var month=d.getMonth()+1;
+			var year=d.getFullYear();
+			var hour=d.getHours();
+			var mins=d.getMinutes();
+			var secs=d.getSeconds();
+			var msec=d.getmilliseconds();
+			return day+"."+month+"."+year+" "+hour+":"+mins+":"+secs+","+msec;
+		}
+		<iframe width="600" height="450" frameborder="0" style="border:0"
+src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ97LNIg3ZSjoRZ6rC5BmuMXo&key=..." allowfullscreen></iframe>
+<iframe
+  width="600"
+  height="450"
+  frameborder="0" style="border:0"
+  src="https://www.google.com/maps/embed/v1/place?key=API_KEY
+    &q=Space+Needle,Seattle+WA" allowfullscreen>
+</iframe>
+	</script>
+	
+</section>
+</div>
+<div style="clear: both;"></div>
+<footer>
+	copyright 2018 srinivas
+</footer>
+
+
+</body>
+</html>
